@@ -1,4 +1,4 @@
-using ContosoUniversity.Data;
+﻿using ContosoUniversity.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -27,6 +27,8 @@ namespace ContosoUniversity
         {
             services.AddDbContext<SchoolContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddDatabaseDeveloperPageExceptionFilter(); //AddDatabaseDeveloperPageExceptionFilter предоставляет полезные сведения об ошибках в среде разработки.
 
             services.AddControllersWithViews();
         }
