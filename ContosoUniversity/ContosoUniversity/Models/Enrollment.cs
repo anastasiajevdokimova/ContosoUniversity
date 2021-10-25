@@ -1,4 +1,7 @@
-﻿namespace ContosoUniversity.Models
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace ContosoUniversity.Models
 {
     public enum Grade
     {
@@ -18,12 +21,13 @@
          * Сущность Enrollment связана с одной сущностью Course.
          */
         public int StudentID { get; set; }
-        
-         /* Свойство StudentID представляет собой внешний ключ (ВК). Ему соответствует свойство навигации Student. 
-         * Сущность Enrollment связана с одной сущностью Student, поэтому свойство содержит только отдельную сущность 
-         * Student. Она отличается от свойства навигации Student.Enrollments, которое содержит несколько сущностей 
-         * Enrollment.
-         */
+        [DisplayFormat(NullDisplayText = "No grade")]
+
+        /* Свойство StudentID представляет собой внешний ключ (ВК). Ему соответствует свойство навигации Student. 
+        * Сущность Enrollment связана с одной сущностью Student, поэтому свойство содержит только отдельную сущность 
+        * Student. Она отличается от свойства навигации Student.Enrollments, которое содержит несколько сущностей 
+        * Enrollment.
+        */
         public Grade? Grade { get; set; }
 
         /*Свойство Grade имеет тип enum. Знак ? после объявления типа Grade указывает, что свойство Grade допускает 
