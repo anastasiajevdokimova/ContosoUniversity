@@ -38,6 +38,7 @@ namespace ContosoUniversity.Controllers
 
             var course = await _context.Courses
                 .Include(c => c.Department)
+                .AsNoTracking()
                 .FirstOrDefaultAsync(m => m.CourseID == id);
             if (course == null)
             {
@@ -57,6 +58,12 @@ namespace ContosoUniversity.Controllers
         // POST: Courses/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        public IActionResult Create()
+        {
+            PopulateDepartmentsDropDownList();
+            return View();
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("CourseID,Credits,DepartmentID,Title")] Course course)
@@ -71,7 +78,6 @@ namespace ContosoUniversity.Controllers
             return View(course);
         }
 
-        // GET: Courses/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -90,9 +96,6 @@ namespace ContosoUniversity.Controllers
             return View(course);
         }
 
-        // POST: Courses/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost, ActionName("Edit")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditPost(int? id)
@@ -125,6 +128,15 @@ namespace ContosoUniversity.Controllers
             PopulateDepartmentsDropDownList(courseToUpdate.DepartmentID);
             return View(courseToUpdate);
         }
+
+        private void PopulateDepartmentsDropDownList(object selectedDepartment = null)
+        {
+            var departmentsQuery = from d in _context.Departments
+                                   orderby d.Name
+                                   select d;
+            ViewBag.DepartmentID = new SelectList(departmentsQuery.AsNoTracking(), "DepartmentID", "Name", selectedDepartment);
+        }
+
         /*Метод PopulateDepartmentsDropDownList возвращает список всех кафедр, отсортированных по имени, 
          * создает коллекцию SelectList для раскрывающегося списка и передает ее в представление в ViewBag.
          */
@@ -146,6 +158,7 @@ namespace ContosoUniversity.Controllers
 
             var course = await _context.Courses
                 .Include(c => c.Department)
+                .AsNoTracking()
                 .FirstOrDefaultAsync(m => m.CourseID == id);
             if (course == null)
             {
