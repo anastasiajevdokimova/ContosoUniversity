@@ -50,7 +50,7 @@ namespace ContosoUniversity.Controllers
         // GET: Departments/Create
         public IActionResult Create()
         {
-            ViewData["InstructorID"] = new SelectList(_context.Instructors, "ID", "FullName", department.InstructorID);
+            ViewData["InstructorID"] = new SelectList(_context.Instructors, "ID", "FullName");
             return View();
         }
 
