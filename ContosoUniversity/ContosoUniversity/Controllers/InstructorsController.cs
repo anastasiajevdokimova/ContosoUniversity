@@ -55,12 +55,13 @@ namespace ContosoUniversity.Controllers
                     await _context.Entry(enrollment).Reference(x => x.Student).LoadAsync();
                 }
                 viewModel.Enrollments = selectedCourse.Enrollments;
+            }
 
-                return View(viewModel);
+            return View(viewModel);
         }
 
-            // GET: Instructors/Details/5
-            public async Task<IActionResult> Details(int? id)
+        // GET: Instructors/Details/5
+        public async Task<IActionResult> Details(int? id)
             {
                 if (id == null)
                 {
